@@ -1,2 +1,5 @@
 # ignore a.out
 a.out
+
+# editor setting file.
+.vscode
