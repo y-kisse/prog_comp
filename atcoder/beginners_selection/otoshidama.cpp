@@ -1,41 +1,27 @@
 #include <iostream>
-#include <tuple>
 
 using namespace std;
 
-tuple<int, int, int> search(int a, int b, int c, int n);
-
 int main(void) {
   int n, y;
-  int a, b, c;
 
   cin >> n;
   cin >> y;
 
-  a = y / 10000;
-  b = (y % 10000) / 5000;
-  c = (y % 5000) / 1000;
+  int max_a = y / 10000 > n ? n : y / 10000;
 
-  tuple<int, int, int> t = search(a, b, c, n);
+  for(int i = 0; i <= max_a; i++) {
+    int max_b = (y - 10000 * i) / 5000 > n - i ? n - 1 : (y - 10000 * i) / 5000;
+    for(int j = 0; j <= max_b; j++) {
+      int k = (y - 10000 * i - j * 5000) / 1000;
+      if (i + j + k == n && k >= 0) {
+        cout << i << " " << j << " " << k << endl;
+        return 0;
+      }
+    }
+  }
 
-  cout << get<0>(t) << " " << get<1>(t) << " " << get<2>(t) << endl;
+  cout << "-1 -1 -1" << endl;
 
   return 0;
-}
-
-tuple<int, int, int> search(int a, int b, int c, int n) {
-  if (a + b + c == n)
-    return make_tuple(a, b, c);
-  
-  if (a > 0) {
-    tuple<int, int, int> t = search(a-1, b+2, c, n);
-    if (get<0>(t) != -1) return t;
-  }
-
-  if (a + b + c + 4 <= n) {
-    tuple<int, int, int> t = search(a, b-1, c+5, n);
-    if (get<0>(t) != -1) return t;
-  }
-
-  return make_tuple(-1, -1, -1);
 }
