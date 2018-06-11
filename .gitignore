@@ -3,3 +3,5 @@ a.out
 
 # editor setting file.
 .vscode
+
+.DS_Store
